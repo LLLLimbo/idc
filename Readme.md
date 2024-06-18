@@ -1,5 +1,7 @@
 # IDC Demo
 
+Download from latest [release](https://github.com/LLLLimbo/idc/releases)
+
 Run with:
 
 ```shell
