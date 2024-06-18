@@ -1,0 +1,12 @@
+{
+  "random-generator-1": {
+    "redirect": "http://localhost:3000/index.html",
+    "token_endpoint": "http://localhost:3000/token",
+    "session_type": ["cookie"]
+  },
+  "random-generator-2": {
+    "redirect": "http://localhost:3001/index.html",
+    "token_endpoint": "http://localhost:3000/token",
+    "session_type": ["cookie"]
+  }
+}
