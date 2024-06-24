@@ -46,9 +46,19 @@ func MakeTokenRequest(state string, code string) (string, *Token, error) {
 	return string(body), token, nil
 }
 
-func CreateSession(token *Token) (error, *Credential) {
+func CreateSession(token *Token, sessionState string) (error, *Credential) {
 	url := fmt.Sprintf("%s/ac/session/create", *authCenter)
-	data, _ := json.Marshal(token)
+
+	type Req struct {
+		Token        *Token `json:"token"`
+		SessionState string `json:"session_state"`
+	}
+	req := &Req{
+		Token:        token,
+		SessionState: sessionState,
+	}
+
+	data, _ := json.Marshal(req)
 	resp, _ := http.Post(url, "application/json", bytes.NewBuffer(data))
 	defer resp.Body.Close()
 	body, _ := io.ReadAll(resp.Body)

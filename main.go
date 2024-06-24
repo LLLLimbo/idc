@@ -58,6 +58,7 @@ func RedirectCallbackHandler(cache *Cache, ac *AppContext) func(c *gin.Context) 
 	return func(c *gin.Context) {
 		code := c.Query("code")
 		state := c.Query("state")
+		sessionState := c.Query("session_state")
 		_, token, err := MakeTokenRequest(state, code)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error request token"})
@@ -72,7 +73,7 @@ func RedirectCallbackHandler(cache *Cache, ac *AppContext) func(c *gin.Context) 
 			app = ac.GetAppConfig(appId)
 		}
 
-		_, cred := CreateSession(token)
+		_, cred := CreateSession(token, sessionState)
 		log.Printf("Setting token cache for app %s", appId)
 		otk := randomStr(6)
 		cache.Set(fmt.Sprintf("t_%s", otk), cred.ToJsonStr(), 30*time.Minute)
